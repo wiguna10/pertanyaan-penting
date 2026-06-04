@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertanyaan Penting</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffe6e6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h2 {
+            color: #ff4d6d;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-around;
+            position: relative;
+            height: 50px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #btn-yes {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #btn-yes:hover {
+            background-color: #ff758f;
+            transform: scale(1.1);
+        }
+
+        #btn-no {
+            background-color: #ccc;
+            color: #333;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 id="question">Kamu sayang aku ga?</h2>
+        <div class="btn-container">
+            <button id="btn-yes" onclick="answerYes()">Iyah</button>
+            <button id="btn-no" onmouseover="moveButton()" onclick="moveButton()">Tidak</button>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi ketika tombol "Tidak" didekati (di laptop) atau diklik (di HP)
+        function moveButton() {
+            const btnNo = document.getElementById('btn-no');
+            
+            // Mengubah posisi tombol "Tidak" secara acak agar tidak bisa diklik
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 50);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 50);
+            
+            // Pindahkan tombol ke luar container (menggunakan posisi absolut terhadap layar)
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = x + 'px';
+            btnNo.style.top = y + 'px';
+        }
+
+        // Fungsi ketika tombol "Iyah" diklik
+        function answerYes() {
+            const question = document.getElementById('question');
+            const btnContainer = document.querySelector('.btn-container');
+            
+            // Mengubah teks pertanyaan menjadi respon sukses
+            question.innerHTML = "Yeayyy! Aku juga sayang banget sama kamu! ❤️🥰";
+            
+            // Sembunyikan tombol setelah dijawab
+            btnContainer.style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
