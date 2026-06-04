@@ -3,116 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pertanyaan Lucu</title>
+<title>Do You Love Me?</title>
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #ffe6e6;
-        height: 100vh;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
 
-    .container {
-        background: white;
-        padding: 30px;
-        border-radius: 20px;
-        text-align: center;
-        width: 90%;
-        max-width: 400px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
+body{
+    background:#fff;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
 
-    h2 {
-        color: #ff4d6d;
-        margin-bottom: 25px;
-    }
+h1{
+    color:#c0392b;
+    margin-bottom:30px;
+    font-size:45px;
+}
 
-    .btn-container {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        position: relative;
-    }
+.buttons{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:30px;
+}
 
-    button {
-        padding: 12px 25px;
-        font-size: 16px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.3s ease;
-    }
+button{
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    color:white;
+    font-weight:bold;
+    transition:0.3s;
+}
 
-    #btn-yes {
-        background: #ff4d6d;
-        color: white;
-    }
+#yesBtn{
+    background:#00c16e;
+    font-size:24px;
+    padding:15px 35px;
+}
 
-    #btn-no {
-        background: #ccc;
-        color: #333;
-        position: relative;
-    }
+#noBtn{
+    background:#ff4d4d;
+    font-size:20px;
+    padding:15px 25px;
+}
+
+.cat{
+    width:250px;
+    margin-top:20px;
+}
 </style>
-
 </head>
+
 <body>
 
-<div class="container">
-    <h2 id="question">Kamu sayang aku gak?</h2>
+<h1>DO YOU LOVE ME?</h1>
 
-    <div class="btn-container">
-        <button id="btn-yes" onclick="answerYes()">Iyah</button>
-        <button id="btn-no" onmouseover="moveButton()" onclick="lockNo()">Tidak</button>
-    </div>
+<div class="buttons">
+    <button id="yesBtn">YES</button>
+    <button id="noBtn">NO</button>
 </div>
 
+<img
+class="cat"
+src="cat.webp"
+alt="cat">
+
 <script>
-    let noLocked = false;
 
-    function moveButton() {
-        const btnNo = document.getElementById('btn-no');
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
 
-        if (noLocked) return;
+let clickCount = 0;
 
-        const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 50);
-        const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 50);
+const texts = [
+    "NO",
+    "Are you sure?",
+    "Really?",
+    "Think again!",
+    "Please...",
+    "Don't do this 😢",
+    "Last chance!",
+    "Why? 😭",
+    "Stop clicking!",
+    "Ok fine, I am telling you to STOP..."
+];
 
-        btnNo.style.position = "fixed";
-        btnNo.style.left = x + "px";
-        btnNo.style.top = y + "px";
+noBtn.addEventListener("click", () => {
+
+    clickCount++;
+
+    let size = 24 + (clickCount * 18);
+
+    yesBtn.style.fontSize = size + "px";
+    yesBtn.style.padding =
+        (15 + clickCount * 6) + "px " +
+        (35 + clickCount * 20) + "px";
+
+    let noSize = 20 - clickCount;
+
+    if(noSize > 8){
+        noBtn.style.fontSize = noSize + "px";
     }
 
-    function lockNo() {
-        const btnNo = document.getElementById('btn-no');
-        const btnYes = document.getElementById('btn-yes');
-        const question = document.getElementById('question');
-
-        noLocked = true;
-
-        // tombol tidak jadi diam
-        btnNo.style.position = "static";
-        btnNo.style.opacity = "0.5";
-        btnNo.style.cursor = "not-allowed";
-
-        // tombol iyah membesar
-        btnYes.style.transform = "scale(1.6)";
-        btnYes.style.transition = "0.3s ease";
-
-        question.innerHTML = "Yakin gak mau pilih Iyah? 😏";
+    if(clickCount < texts.length){
+        noBtn.innerText = texts[clickCount];
+    }else{
+        noBtn.innerText = texts[texts.length - 1];
     }
 
-    function answerYes() {
-        const question = document.getElementById('question');
-        const btnContainer = document.querySelector('.btn-container');
+});
 
-        question.innerHTML = "Yeayyy! Aku juga sayang kamu ❤️🥰";
-        btnContainer.style.display = "none";
-    }
+yesBtn.addEventListener("click", () => {
+
+    document.body.innerHTML = `
+        <div style="text-align:center">
+            <h1 style="color:#00c16e">
+                ❤️ I LOVE YOU TOO ❤️
+            </h1>
+
+            <img
+            src="p1.webp"
+            width="300">
+
+            <h2 style="margin-top:20px">
+                😍
+            </h2>
+        </div>
+    `;
+
+});
+
 </script>
 
 </body>
