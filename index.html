@@ -1,107 +1,119 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pertanyaan Penting</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #ffe6e6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pertanyaan Lucu</title>
 
-        .container {
-            text-align: center;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 90%;
-        }
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #ffe6e6;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        h2 {
-            color: #ff4d6d;
-            margin-bottom: 30px;
-        }
+    .container {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
 
-        .btn-container {
-            display: flex;
-            justify-content: space-around;
-            position: relative;
-            height: 50px;
-        }
+    h2 {
+        color: #ff4d6d;
+        margin-bottom: 25px;
+    }
 
-        button {
-            padding: 12px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        position: relative;
+    }
 
-        #btn-yes {
-            background-color: #ff4d6d;
-            color: white;
-        }
+    button {
+        padding: 12px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
 
-        #btn-yes:hover {
-            background-color: #ff758f;
-            transform: scale(1.1);
-        }
+    #btn-yes {
+        background: #ff4d6d;
+        color: white;
+    }
 
-        #btn-no {
-    background-color: #ccc;
-    color: #333;
-}
-        }
-    </style>
+    #btn-no {
+        background: #ccc;
+        color: #333;
+        position: relative;
+    }
+</style>
+
 </head>
 <body>
 
-    <div class="container">
-        <h2 id="question">Kamu sayang aku ga?</h2>
-        <div class="btn-container">
-            <button id="btn-yes" onclick="answerYes()">Iyah</button>
-            <button id="btn-no" onmouseover="moveButton()" onclick="moveButton()">Tidak</button>
-        </div>
+<div class="container">
+    <h2 id="question">Kamu sayang aku gak?</h2>
+
+    <div class="btn-container">
+        <button id="btn-yes" onclick="answerYes()">Iyah</button>
+        <button id="btn-no" onmouseover="moveButton()" onclick="lockNo()">Tidak</button>
     </div>
+</div>
 
-    <script>
-        // Fungsi ketika tombol "Tidak" didekati (di laptop) atau diklik (di HP)
-        function moveButton() {
-            const btnNo = document.getElementById('btn-no');
-            
-            // Mengubah posisi tombol "Tidak" secara acak agar tidak bisa diklik
-            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 50);
-            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 50);
-            
-            // Pindahkan tombol ke luar container (menggunakan posisi absolut terhadap layar)
-            btnNo.style.position = 'fixed';
-            btnNo.style.left = x + 'px';
-            btnNo.style.top = y + 'px';
-        }
+<script>
+    let noLocked = false;
 
-        // Fungsi ketika tombol "Iyah" diklik
-        function answerYes() {
-            const question = document.getElementById('question');
-            const btnContainer = document.querySelector('.btn-container');
-            
-            // Mengubah teks pertanyaan menjadi respon sukses
-            question.innerHTML = "Yeayyy! Aku juga sayang banget sama kamu! ❤️🥰";
-            
-            // Sembunyikan tombol setelah dijawab
-            btnContainer.style.display = 'none';
-        }
-    </script>
+    function moveButton() {
+        const btnNo = document.getElementById('btn-no');
+
+        if (noLocked) return;
+
+        const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 50);
+        const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 50);
+
+        btnNo.style.position = "fixed";
+        btnNo.style.left = x + "px";
+        btnNo.style.top = y + "px";
+    }
+
+    function lockNo() {
+        const btnNo = document.getElementById('btn-no');
+        const btnYes = document.getElementById('btn-yes');
+        const question = document.getElementById('question');
+
+        noLocked = true;
+
+        // tombol tidak jadi diam
+        btnNo.style.position = "static";
+        btnNo.style.opacity = "0.5";
+        btnNo.style.cursor = "not-allowed";
+
+        // tombol iyah membesar
+        btnYes.style.transform = "scale(1.6)";
+        btnYes.style.transition = "0.3s ease";
+
+        question.innerHTML = "Yakin gak mau pilih Iyah? 😏";
+    }
+
+    function answerYes() {
+        const question = document.getElementById('question');
+        const btnContainer = document.querySelector('.btn-container');
+
+        question.innerHTML = "Yeayyy! Aku juga sayang kamu ❤️🥰";
+        btnContainer.style.display = "none";
+    }
+</script>
 
 </body>
 </html>
