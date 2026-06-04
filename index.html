@@ -3,143 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Do You Love Me?</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, sans-serif;
+    font-family:'Poppins',sans-serif;
 }
 
 body{
-    background:#fff;
     min-height:100vh;
     display:flex;
-    flex-direction:column;
     justify-content:center;
     align-items:center;
+    background:linear-gradient(
+        135deg,
+        #ff9a9e,
+        #fad0c4,
+        #fad0c4,
+        #fbc2eb
+    );
+    overflow:hidden;
+}
+
+.card{
+    width:90%;
+    max-width:600px;
+    text-align:center;
+
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.2);
+
+    padding:40px;
+    border-radius:30px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+
+    animation:fadeUp .8s ease;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 h1{
-    color:#c0392b;
-    margin-bottom:30px;
-    font-size:45px;
+    color:white;
+    font-size:40px;
+    margin-bottom:20px;
+    text-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+
+.cat{
+    width:220px;
+    margin:20px auto;
+    display:block;
 }
 
 .buttons{
     display:flex;
-    gap:10px;
     justify-content:center;
-    align-items:center;
-    margin-bottom:30px;
+    gap:12px;
+    margin-top:20px;
 }
 
 button{
     border:none;
-    border-radius:10px;
     cursor:pointer;
     color:white;
-    font-weight:bold;
-    transition:0.3s;
+    font-weight:600;
+    transition:.3s;
 }
 
 #yesBtn{
-    background:#00c16e;
-    font-size:24px;
+    background:#00c26e;
     padding:15px 35px;
+    font-size:22px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,194,110,.4);
+}
+
+#yesBtn:hover{
+    transform:translateY(-3px);
 }
 
 #noBtn{
-    background:#ff4d4d;
-    font-size:20px;
-    padding:15px 25px;
+    background:#ff4d6d;
+    padding:15px 35px;
+    font-size:18px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(255,77,109,.4);
 }
 
-.cat{
-    width:250px;
-    margin-top:20px;
+.result{
+    color:white;
+    font-size:40px;
+    font-weight:700;
 }
+
+.subtitle{
+    color:white;
+    margin-top:10px;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>DO YOU LOVE ME?</h1>
+<div class="card" id="card">
 
-<div class="buttons">
-    <button id="yesBtn">YES</button>
-    <button id="noBtn">NO</button>
+    <h1>DO YOU LOVE ME? ❤️</h1>
+
+    <img
+    class="cat"
+    id="cat"
+    src="cat.webp">
+
+    <div class="buttons">
+
+        <button id="yesBtn">
+            YES
+        </button>
+
+        <button id="noBtn">
+            NO
+        </button>
+
+    </div>
+
 </div>
 
-<img
-class="cat"
-src="cat.webp"
-alt="cat">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
 <script>
 
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
+const card = document.getElementById("card");
 
-let clickCount = 0;
+let count = 0;
 
-const texts = [
-    "NO",
-    "Are you sure?",
-    "Really?",
-    "Think again!",
-    "Please...",
-    "Don't do this 😢",
-    "Last chance!",
-    "Why? 😭",
-    "Stop clicking!",
-    "Ok fine, I am telling you to STOP..."
+const noTexts = [
+"NO",
+"Are you sure?",
+"Really?",
+"Think again!",
+"Please 😢",
+"Don't do this 😭",
+"Last chance!",
+"Seriously?",
+"Why??",
+"Stop clicking 😤",
+"Ok fine, I am telling you to STOP..."
 ];
 
-noBtn.addEventListener("click", () => {
+noBtn.addEventListener("click",()=>{
 
-    clickCount++;
+count++;
 
-    let size = 24 + (clickCount * 18);
+yesBtn.style.fontSize = (22 + count*8) + "px";
 
-    yesBtn.style.fontSize = size + "px";
-    yesBtn.style.padding =
-        (15 + clickCount * 6) + "px " +
-        (35 + clickCount * 20) + "px";
+yesBtn.style.padding =
+(15 + count*3) + "px " +
+(35 + count*10) + "px";
 
-    let noSize = 20 - clickCount;
+let noSize = 18 - count;
 
-    if(noSize > 8){
-        noBtn.style.fontSize = noSize + "px";
-    }
+if(noSize > 8){
+noBtn.style.fontSize = noSize + "px";
+}
 
-    if(clickCount < texts.length){
-        noBtn.innerText = texts[clickCount];
-    }else{
-        noBtn.innerText = texts[texts.length - 1];
-    }
+if(count < noTexts.length){
+noBtn.innerText = noTexts[count];
+}else{
+noBtn.innerText = noTexts[noTexts.length-1];
+}
 
 });
 
-yesBtn.addEventListener("click", () => {
+yesBtn.addEventListener("click",()=>{
 
-    document.body.innerHTML = `
-        <div style="text-align:center">
-            <h1 style="color:#00c16e">
-                ❤️ I LOVE YOU TOO ❤️
-            </h1>
+confetti({
+particleCount:250,
+spread:120,
+origin:{y:0.6}
+});
 
-            <img
-            src="p1.webp"
-            width="300">
+card.innerHTML = `
 
-            <h2 style="margin-top:20px">
-                😍
-            </h2>
-        </div>
-    `;
+<div class="result">
+❤️ I LOVE YOU TOO ❤️
+</div>
+
+<img
+class="cat"
+src="p1.webp">
+
+<p class="subtitle">
+You made my day 🥰
+</p>
+
+`;
 
 });
 
